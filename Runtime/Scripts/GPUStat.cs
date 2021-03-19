@@ -59,8 +59,27 @@ namespace GpuUsageSys {
 		}
 		#endregion
 
+		public static IEnumerable<GPUStat> Stats {
+			get {
+				foreach (var v in PhysicalGPU.GetPhysicalGPUs()) {
+					var created = false;
+					var stat = default(GPUStat);
+
+					try {
+						stat = new GPUStat(v);
+						if (!stat.Equals(default))
+							created = true;
+					} catch (System.Exception e) {
+						//Debug.LogWarning(e);
+					}
+
+					if (created)
+						yield return stat;
+				}
+			}
+		}
 		public static GPUStatList Create() {
-			var list = PhysicalGPU.GetPhysicalGPUs().Select(v => new GPUStat(v)).ToArray();
+			var list = Stats.ToArray();
 			return new GPUStatList(list);
 		}
 		#endregion
