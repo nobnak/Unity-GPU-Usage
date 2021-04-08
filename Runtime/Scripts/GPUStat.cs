@@ -69,8 +69,7 @@ namespace GpuUsageSys {
 						stat = new GPUStat(v);
 						if (!stat.Equals(default))
 							created = true;
-					} catch (System.Exception e) {
-						//Debug.LogWarning(e);
+					} catch {
 					}
 
 					if (created)
